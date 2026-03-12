@@ -1,0 +1,49 @@
+What is Git Checkout
+
+The git checkout command in Git is used to:
+
+Switch between different branches.
+
+Go back to a previous version of the project.
+
+Create a new branch and switch to it.
+
+Restore a specific file from a previous commit.
+
+In other words, this command changes the state of the files in the project to match the state stored in a specific commit or branch.
+
+
+Basic Syntax
+
+The general syntax of the command is:
+
+git checkout [branch-name]
+
+or 
+
+git checkout [commit-id]
+
+
+
+Switching Between Branches
+
+The checkout command can be used to move between different branches in a project.
+
+Example: git checkout main
+
+This command switches to the main branch.
+
+Another example: git checkout feature-login
+
+This moves the user to the feature-login branch, which may contain the login feature development.
+
+
+Checkout an Old Commit
+
+Git allows you to return to a previous version of the project using the commit ID.
+
+First, display the list of commits: git log
+
+Then switch to a specific commit: git checkout commit-id
+
+After running this command, the project will appear exactly as it was at that commit.
