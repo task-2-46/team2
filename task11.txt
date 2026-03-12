@@ -1,0 +1,16 @@
+Git Commands Research
+1. Git Stash
+
+Git Stash is used to save changes temporarily without making a commit.
+
+It is useful when you are working on something but need to switch to another branch quickly.
+
+Example
+git stash
+
+This command saves your current changes and cleans your working directory.
+
+Restore the changes
+git stash pop
+
+This command restores the saved changes.
