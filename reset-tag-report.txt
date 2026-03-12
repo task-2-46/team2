@@ -1,0 +1,161 @@
+Tags in Git
+
+A tag in Git is a reference that points to a specific commit in the repository history. Tags are mainly used to mark important versions of a project such as releases, stable builds, or important milestones during development. By assigning a tag to a commit, developers can easily identify and return to that exact version of the project in the future. Tags are usually named using version numbers like `v1.0`, `v1.1`, or `v2.0`, which helps teams track the evolution of the software.
+
+Unlike branches, tags are designed to be static references. A branch moves forward whenever new commits are added, but a tag remains fixed to the commit where it was created. This characteristic makes tags useful for marking official releases because they ensure that the tagged version always refers to the same exact code state.
+
+Developers often use tags in collaborative projects to clearly identify stable versions of the software. When a team releases a new version, they typically create a tag on the commit that represents that release so that it can easily be accessed or downloaded later.
+
+---
+
+ Types of Tags
+
+Git supports two main types of tags, and each type serves a slightly different purpose depending on how the project is managed.
+
+Lightweight tags are simple references that point directly to a commit. They contain no additional information and are essentially just labels for commits. Developers often use them for quick references during development or for temporary tagging purposes.
+
+Example command:
+
+
+git tag v1.0
+
+
+This command creates a lightweight tag called `v1.0` pointing to the current commit.
+
+Characteristics of lightweight tags:
+
+* They only store a reference to a commit.
+* They do not contain metadata.
+* They are fast and simple to create.
+* They are commonly used for temporary or local markers.
+
+The second type is annotated tags, which are more detailed and are usually used for official software releases. Annotated tags store additional information such as the tag creator’s name, the creation date, and a message describing the version.
+
+Example command:
+
+
+git tag -a v1.0 -m "First stable release"
+
+
+Annotated tags provide better documentation for the project history and are generally recommended when tagging release versions.
+
+Characteristics of annotated tags:
+
+* They store metadata about the tag.
+* They include a message explaining the tagged version.
+* They provide more information about who created the tag and when.
+* They are preferred for production releases.
+
+---
+
+ Viewing and Managing Tags
+
+Git provides several commands that allow developers to manage and inspect tags inside a repository.
+
+To list all tags in the repository:
+
+
+git tag
+
+
+This command displays all tags that exist in the project.
+
+To view detailed information about a tag:
+
+
+git show v1.0
+
+
+This command shows the commit associated with the tag, the author information, and the message attached to it.
+
+Developers can also create tags for previous commits by specifying the commit hash.
+
+Example:
+
+
+git tag v1.0 a1b2c3d
+
+
+In this case, the tag `v1.0` will reference the commit identified by the hash `a1b2c3d`.
+
+Tags can also be removed when they are no longer needed.
+
+To delete a tag locally:
+
+
+git tag -d v1.0
+
+
+If the tag has already been pushed to a remote repository, it must also be deleted from the remote server:
+
+
+git push origin :refs/tags/v1.0
+
+
+---
+
+ Reset Tag in Git
+
+A reset tag operation means changing the commit that an existing tag points to. Normally, tags are meant to represent fixed points in the repository history. However, there are situations where the tag may need to be moved to another commit. This usually happens when a tag was created on the wrong commit or when a release tag was created before all necessary changes or bug fixes were included.
+
+For example, suppose the commit history looks like this:
+
+
+A ---- B ---- C ---- D
+
+
+Assume that the tag `v1.0` was created on commit C, but later developers discovered that commit D contains important fixes that should be part of the release. In this case, the tag should be updated so that it points to commit D instead of C.
+
+Originally:
+
+
+v1.0 → C
+
+
+After resetting the tag:
+
+
+v1.0 → D
+
+
+This process is called resetting the tag, because the tag reference is moved from one commit to another.
+
+Git does not allow tags to be overwritten automatically because they are meant to represent permanent references. Therefore, resetting a tag usually involves deleting the existing tag and creating it again pointing to the correct commit.
+
+The typical process for resetting a tag includes the following steps.
+
+First, the old tag is deleted locally:
+
+
+git tag -d v1.0
+
+
+Next, the tag is recreated and pointed to the correct commit:
+
+
+git tag v1.0 <commit-hash>
+
+
+If the tag already exists on a remote repository, the remote version must also be updated. The old remote tag is removed:
+
+
+git push origin :refs/tags/v1.0
+
+
+Then the updated tag is pushed again:
+
+
+git push origin v1.0
+
+
+Another method for resetting a tag is to force update the tag using the `-f` option.
+
+
+git tag -f v1.0
+
+
+This command moves the tag to the current commit and replaces the previous reference. Although this method is faster, it should be used carefully because it changes the existing tag reference and may cause confusion for other developers who already use that tag.
+
+Resetting tags is sometimes necessary during software development, especially when correcting mistakes or adjusting release versions. However, developers generally try to avoid modifying tags after they have been published, because other team members might already depend on them. If a tag must be reset in a collaborative project, the team should be informed so that everyone updates their local repositories accordingly.
+
+Reset tags therefore play an important role in maintaining accurate version references. They allow developers to correct tagging mistakes and ensure that release labels always point to the correct commit that represents the intended version of the software.
